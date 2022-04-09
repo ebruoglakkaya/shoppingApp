@@ -1,27 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, View, Text, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
-import {ProductCard, SearchBar, BoynerProductCard} from './components';
+import {BoynerProductCard} from '../../components';
 import axios from 'axios';
 
-function Main() {
+
+function Home({
+    navigation
+}) {
   const [boynerProductList, setBoynerProductList] = useState();
   const [loadingState, setLoadingState] = useState(true);
+  const [errorState, setErrorState] = useState(false);
 
 
-const renderProduct = ({item}) => <BoynerProductCard product={item} />;
+const renderProduct = ({item}) => <BoynerProductCard product={item} onPress={() =>navigation.navigate('ProductDetail',item)} />;
 
   useEffect(() => {
     axios
       .get('https://www.mockachino.com/42a008d9-66a2-41/products')
       .then(function (response) {
         // handle success
-        console.log(response.data);
         setBoynerProductList(response.data.ProductList);
         setLoadingState(false);
 
       })
       .catch(function (error) {
         // handle error
+        setErrorState(true);
         console.log(error);
       });
   }, []);
@@ -32,6 +36,13 @@ const renderProduct = ({item}) => <BoynerProductCard product={item} />;
             <ActivityIndicator size='large'/>
         </SafeAreaView>
       );
+  }
+  if(errorState) {
+      return(
+          <SafeAreaView style={styles.loadingContainer}>
+              <Text>Error</Text>
+          </SafeAreaView>
+      )
   }
   return (
     <SafeAreaView style={styles.container}>
@@ -61,4 +72,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Main;
+export default Home;
