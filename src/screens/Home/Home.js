@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Button,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {BoynerProductCard} from '../../components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,6 +24,8 @@ function Home({navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [boynerCatalogList, setBoynerCatalogList] = useState();
   const [loadingCatalogState, setLoadingCatalogState] = useState(true);
+  const [filterItemsList, setfilterItemsList] = useState([]);
+  const [selectedModalHeader, setSelectedModalHeader] = useState('Filtrele');
 
   const renderProduct = ({item}) => (
     <BoynerProductCard
@@ -30,6 +33,10 @@ function Home({navigation}) {
       onPress={() => navigation.navigate('ProductDetail', item)}
     />
   );
+  const handleSelectCatalog = (list, name) => {
+    setfilterItemsList(list);
+    setSelectedModalHeader(name);
+  };
 
   useEffect(() => {
     axios
@@ -42,21 +49,30 @@ function Home({navigation}) {
       .catch(function (error) {
         // handle error
         setErrorState(true);
+        console.log(error.response);
       });
     axios
       .get('https://www.mockachino.com/42a008d9-66a2-41/filter')
       .then(function (response) {
         // handle success
         setBoynerCatalogList(response.data.Context.FilterModules);
+        // setBoynerCatalogList(
+
+        //   Object.keys(response.data.Context.FilterModules).forEach((key,index) => {
+        //     return(response.data.Context.FilterModules[key])
+        //   })
+
+        // );
         setLoadingCatalogState(false);
       })
       .catch(function (error) {
         // handle error
         setErrorState(true);
+        console.log(error.response);
       });
   }, []);
 
-  if (loadingState) {
+  if (loadingState || loadingCatalogState) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
         <ActivityIndicator size="large" />
@@ -99,12 +115,32 @@ function Home({navigation}) {
         style={styles.contentView}>
         <View style={styles.content}>
           <View style={styles.modalHeader}>
-            <Icon
-              onPress={() => setModalVisible(false)}
-              name={'close'}
-              size={30}
-            />
-            <Text>Filtrele</Text>
+            {filterItemsList.length > 0 ? (
+              <Icon
+                onPress={() => {
+                  setfilterItemsList([]);
+                  setSelectedModalHeader('Filtrele');
+                }}
+                name={'arrow-left-drop-circle-outline'}
+                size={30}
+              />
+            ) : (
+              <Icon
+                onPress={() => setModalVisible(false)}
+                name={'close'}
+                size={30}
+              />
+            )}
+            <Text>{selectedModalHeader}</Text>
+
+            {filterItemsList.length > 0 ? (
+              <TouchableOpacity>
+                <Text style={styles.selectAllText}>Tümünü Seç</Text>
+              </TouchableOpacity>
+            ) : (
+              <View style={{width: 30}}></View>
+            )}
+
             {/* {boynerCatalogList.length > 0 && Object.keys(boynerCatalogList).forEach((key, index)=>{
             return (
               <TouchableOpacity>
@@ -122,41 +158,101 @@ function Home({navigation}) {
               </TouchableOpacity>
             )
           })} */}
-
-            
           </View>
-          <TouchableOpacity style={styles.filterItem}>
-              <Text>{boynerCatalogList['100'].Name}</Text>
-              <Icon size={20} name= 'arrow-right-drop-circle-outline' />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterItem}>
-              <Text>{boynerCatalogList['1056'].Name}</Text>
-              <Icon size={20} name= 'arrow-right-drop-circle-outline' />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterItem}>
-              <Text>{boynerCatalogList['1057'].Name}</Text>
-              <Icon size={20} name= 'arrow-right-drop-circle-outline' />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterItem}>
-              <Text>{boynerCatalogList['1059'].Name}</Text>
-              <Icon size={20} name= 'arrow-right-drop-circle-outline' />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterItem}>
-              <Text>{boynerCatalogList['1060'].Name}</Text>
-              <Icon size={20} name= 'arrow-right-drop-circle-outline' />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterItem}>
-              <Text>{boynerCatalogList['1064'].Name}</Text>
-              <Icon size={20} name= 'arrow-right-drop-circle-outline' />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterItem}>
-              <Text>{boynerCatalogList['Price'].Name}</Text>
-              <Icon size={20} name= 'arrow-right-drop-circle-outline' />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterButton}>
-              <Text>Ürünleri Gör</Text>
-            </TouchableOpacity>
-
+          {filterItemsList.length > 0 ? (
+            <ScrollView style={{width: '100%'}}>
+              {filterItemsList.map((item, index) => {
+                return (
+                  <TouchableOpacity style={styles.filterItemsList}>
+                    <Text>{item.Name}</Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          ) : (
+            <>
+              <TouchableOpacity
+                style={styles.filterItem}
+                onPress={() => {
+                  handleSelectCatalog(
+                    boynerCatalogList['100'].FilterModuleItems,
+                    boynerCatalogList['100'].Name,
+                  );
+                }}>
+                <Text>{boynerCatalogList['100'].Name}</Text>
+                <Icon size={20} name="arrow-right-drop-circle-outline" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.filterItem}
+                onPress={() => {
+                  handleSelectCatalog(
+                    boynerCatalogList['1056'].FilterModuleItems,
+                    boynerCatalogList['1056'].Name,
+                  );
+                }}>
+                <Text>{boynerCatalogList['1056'].Name}</Text>
+                <Icon size={20} name="arrow-right-drop-circle-outline" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.filterItem}
+                onPress={() => {
+                  handleSelectCatalog(
+                    boynerCatalogList['1057'].FilterModuleItems,
+                    boynerCatalogList['1057'].Name,
+                  );
+                }}>
+                <Text>{boynerCatalogList['1057'].Name}</Text>
+                <Icon size={20} name="arrow-right-drop-circle-outline" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.filterItem}
+                onPress={() => {
+                  handleSelectCatalog(
+                    boynerCatalogList['1059'].FilterModuleItems,
+                    boynerCatalogList['1059'].Name,
+                  );
+                }}>
+                <Text>{boynerCatalogList['1059'].Name}</Text>
+                <Icon size={20} name="arrow-right-drop-circle-outline" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.filterItem}
+                onPress={() => {
+                  handleSelectCatalog(
+                    boynerCatalogList['1060'].FilterModuleItems,
+                    boynerCatalogList['1060'].Name,
+                  );
+                }}>
+                <Text>{boynerCatalogList['1060'].Name}</Text>
+                <Icon size={20} name="arrow-right-drop-circle-outline" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.filterItem}
+                onPress={() => {
+                  handleSelectCatalog(
+                    boynerCatalogList['1064'].FilterModuleItems,
+                    boynerCatalogList['1064'].Name,
+                  );
+                }}>
+                <Text>{boynerCatalogList['1064'].Name}</Text>
+                <Icon size={20} name="arrow-right-drop-circle-outline" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.filterItem}
+                onPress={() => {
+                  handleSelectCatalog(
+                    boynerCatalogList['Price'].FilterModuleItems,
+                    boynerCatalogList['Price'].Name,
+                  );
+                }}>
+                <Text>{boynerCatalogList['Price'].Name}</Text>
+                <Icon size={20} name="arrow-right-drop-circle-outline" />
+              </TouchableOpacity>
+            </>
+          )}
+          <TouchableOpacity style={styles.filterButton}>
+            <Text>Ürünleri Gör</Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     </SafeAreaView>

@@ -47,7 +47,7 @@ export default StyleSheet.create({
         },
         modalHeader: {
             flexDirection: 'row',
-            justifyContent: 'space-around',
+            justifyContent: 'space-between',
             marginVertical: 15,
             alignItems: 'center',
             width: '100%',
@@ -66,7 +66,15 @@ export default StyleSheet.create({
             position: 'absolute',
             bottom: 50,
             borderRadius: 20,
-            
+        },
+        filterItemsList: {
+            borderBottomWidth: 1,
+            width: '100%',
+            paddingVertical: 10,
+        },
+        selectAllText: {
+            fontSize: 12,
+            fontWeight: '300',
         }
        
 });
