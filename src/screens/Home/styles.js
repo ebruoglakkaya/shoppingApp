@@ -51,6 +51,22 @@ export default StyleSheet.create({
             marginVertical: 15,
             alignItems: 'center',
             width: '100%',
+        },
+        filterItem: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            borderBottomWidth: 1,
+            width: '100%',
+            paddingVertical: 10,
+        },
+        filterButton: {
+            backgroundColor: 'green',
+            padding: 20,
+            alignSelf: 'center',
+            position: 'absolute',
+            bottom: 50,
+            borderRadius: 20,
+            
         }
        
 });
