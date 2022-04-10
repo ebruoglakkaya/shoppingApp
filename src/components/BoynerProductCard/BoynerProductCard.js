@@ -8,6 +8,7 @@ const BoynerProductCard = ({product, onPress}) => {
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             <Image source={{uri: product.PictureUrl}} style={styles.image} resizeMode="contain"/>
+            <Text>{product.ProductBrand}</Text>
             <Text style={styles.title}>{product.ModelName}</Text>
             <View style={styles.footer}>
             <View style={styles.priceContainer}>

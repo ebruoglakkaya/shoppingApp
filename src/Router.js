@@ -2,7 +2,9 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 
 import Favorites from "./screens/Favorites/Favorites";
@@ -15,30 +17,30 @@ import ProductDetail from "./screens/ProductDetail/ProductDetail";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const HomeStack = () => {
+const HomeTab = () => {
     return (
-        <Stack.Navigator screenOptions={{ header: () => null }}>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="ProductDetail" component={ProductDetail} />
-        </Stack.Navigator>
-    );
-};
-
-function App() {
-    return <NavigationContainer>
         <Tab.Navigator 
         screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color }) =>
                     generateIcon(focused, color, route),
                 })}>
-            
-            <Tab.Screen name="HomeTab" component={HomeStack}/>
-            <Tab.Screen name="CategoriesTab" component={Categories}/>
-            <Tab.Screen name="BasketTab" component={Basket}/>
-            <Tab.Screen name="FavoritesTab" component={Favorites}/>
-            <Tab.Screen name="AccountTab" component={Account}/>
-
+            <Tab.Screen name="Anasayfa" component={Home}/>
+            <Tab.Screen name="Kategoriler" component={Categories}/>
+            <Tab.Screen name="Sepetim" component={Basket}/>
+            <Tab.Screen name="Favoriler" component={Favorites}/>
+            <Tab.Screen name="Hesabım" component={Account}/>
         </Tab.Navigator>
+    );
+};
+
+function App() {
+    return <NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen name="Home" component={HomeTab} />
+            <Stack.Screen options={{headerShown: false}}
+             name="ProductDetail" component={ProductDetail}/>
+
+        </Stack.Navigator>
     </NavigationContainer>
     
 }
@@ -51,19 +53,19 @@ function generateIcon(focused, color, route) {
     let iconName;
 
     switch (route.name) {
-        case 'HomeTab':
+        case 'Anasayfa':
             iconName = focused ? 'home' : 'home';
             break;
-        case 'CategoriesTab':
+        case 'Kategoriler':
             iconName = focused ? 'menu' : 'menu';
             break;
-        case 'BasketTab':
+        case 'Sepetim':
                 iconName = focused ? 'basket' : 'basket';
             break;
-        // case 'FavoritesTab':
+        // case 'Favoriler':
         //         iconName = focused ? 'favorite' : 'favorite';
         //     break;
-        case 'AccountTab':
+        case 'Hesabım':
                 iconName = focused ? 'account' : 'account';
             break;
 

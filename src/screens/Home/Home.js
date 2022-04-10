@@ -1,7 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, View, Text, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
+import {SafeAreaView, View, Text, FlatList, StyleSheet, ActivityIndicator, Button, TouchableOpacity} from 'react-native';
 import {BoynerProductCard} from '../../components';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+
 import axios from 'axios';
+
+import styles from './styles';
 
 
 function Home({
@@ -26,7 +31,6 @@ const renderProduct = ({item}) => <BoynerProductCard product={item} onPress={() 
       .catch(function (error) {
         // handle error
         setErrorState(true);
-        console.log(error);
       });
   }, []);
  
@@ -60,16 +64,6 @@ const renderProduct = ({item}) => <BoynerProductCard product={item} onPress={() 
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#acefr1',
-  },
-  loadingContainer: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-  }
-});
+
 
 export default Home;
