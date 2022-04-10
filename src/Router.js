@@ -35,7 +35,7 @@ const HomeTab = () => {
 
 function App() {
     return <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ header: () => null }}>
             <Stack.Screen name="Home" component={HomeTab} />
             <Stack.Screen options={{headerShown: false}}
              name="ProductDetail" component={ProductDetail}/>

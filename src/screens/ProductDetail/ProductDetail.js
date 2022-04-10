@@ -8,9 +8,19 @@ export default function ProductDetail({navigation, route}) {
 
   return (
     <View style={styles.container}>
-        <TouchableOpacity style={styles.backButton}>
+        <View style={styles.buttonsHeaderContainer}>
+        <TouchableOpacity style={styles.backButton} onPress ={() => navigation.goBack()} >
             <Text style={styles.backButtonText}>Geri</Text>
         </TouchableOpacity>
+        <View style={styles.butonsRight}>
+        <TouchableOpacity style={styles.backButton}>
+            <Text style={styles.backButtonText}>Paylaş</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.backButton}>
+            <Text style={styles.backButtonText}>Sepet</Text>
+        </TouchableOpacity>
+        </View>
+        </View>
       <Image
         source={{uri: product.PictureUrl}}
         style={styles.image}

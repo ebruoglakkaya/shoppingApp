@@ -15,11 +15,17 @@ export default StyleSheet.create({
         // },
         // elevation: 20,
     },
-    backButton: {
+    buttonsHeaderContainer: {
         position: 'absolute',
         top: 50,
         left: 15,
         zIndex: 99999,
+        flexDirection: 'row',
+        width: '85%',
+        justifyContent: 'space-between',
+    },
+    butonsRight: {
+        flexDirection: 'row',
     },
     backButtonText: {
     },
