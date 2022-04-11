@@ -64,9 +64,9 @@ function generateIcon(focused, color, route) {
     case 'Cart':
       iconName = focused ? 'basket' : 'basket';
       break;
-    // case 'Favoriler':
-    //         iconName = focused ? 'favorite' : 'favorite';
-    //     break;
+    case 'Favoriler':
+            iconName = focused ? 'material-ui' : 'material-ui';
+        break;
     case 'Hesabım':
       iconName = focused ? 'account' : 'account';
       break;

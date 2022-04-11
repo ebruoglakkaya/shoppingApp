@@ -22,7 +22,6 @@ function Cart() {
   };
   return (
     <SafeAreaView>
-      <Text>Cart</Text>
       {boxBasket.map((item,index) => {
         return <BasketCard product={item} key={index} onPress={() => handleRemoveFromBasket()}/>
       })}
