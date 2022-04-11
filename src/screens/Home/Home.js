@@ -49,7 +49,6 @@ function Home({navigation}) {
       .catch(function (error) {
         // handle error
         setErrorState(true);
-        console.log(error.response);
       });
     axios
       .get('https://www.mockachino.com/42a008d9-66a2-41/filter')
@@ -68,7 +67,6 @@ function Home({navigation}) {
       .catch(function (error) {
         // handle error
         setErrorState(true);
-        console.log(error.response);
       });
   }, []);
 

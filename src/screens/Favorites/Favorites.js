@@ -1,13 +1,12 @@
-import React from "react";
-import { Text, SafeAreaView } from "react-native";
+import React from 'react';
+import {Text, SafeAreaView} from 'react-native';
 
 function Favorites() {
-    return (
-        <SafeAreaView>
-            <Text>Products</Text>
-        </SafeAreaView>
-    );
-    
+  return (
+    <SafeAreaView>
+      <Text>Favorites</Text>
+    </SafeAreaView>
+  );
 }
 
 export default Favorites;

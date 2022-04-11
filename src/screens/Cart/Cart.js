@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, SafeAreaView} from 'react-native';
 
-function Categories() {
+function Cart() {
   return (
     <SafeAreaView>
-      <Text>Categories</Text>
+      <Text>Cart</Text>
     </SafeAreaView>
   );
 }
 
-export default Categories;
+export default Cart;
